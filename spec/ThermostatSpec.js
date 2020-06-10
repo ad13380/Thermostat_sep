@@ -34,14 +34,14 @@ describe('Thermostat', function() {
   });
 
   it('can switch power saving mode off', function() {
-    thermostat.setPsmOff();
+    thermostat.switchPsmMode();
     expect(thermostat.isPsmOn()).toBe(false);
   });
 
   it('can switch power saving mode on', function() {
-    thermostat.setPsmOff();
+    thermostat.switchPsmMode();
     expect(thermostat.isPsmOn()).toBe(false);
-    thermostat.setPsmOn();
+    thermostat.switchPsmMode();
     expect(thermostat.isPsmOn()).toBe(true);
   });
 
@@ -62,7 +62,7 @@ describe('Thermostat', function() {
 
   describe('when power saving mode is off', function() {
     it('has a maximum temperature of 32 degrees', function() {
-      thermostat.setPsmOff();
+      thermostat.switchPsmMode();
       for (var i = 0; i < 13; i++) {
         thermostat.raise();
       }
@@ -88,7 +88,7 @@ describe('Thermostat', function() {
   
     describe('when the temperature is anything else', function() {
       it('it is considered high-usage', function() {
-        thermostat.setPsmOff()
+        thermostat.switchPsmMode();
         for (var i = 0; i < 6; i++) {
           thermostat.raise();
         }

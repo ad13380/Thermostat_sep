@@ -36,11 +36,8 @@ class Thermostat {
   isPsmOn() {
     return this.psm;
   }
-  setPsmOff() {
-    this.psm = false;
-  }
-  setPsmOn() {
-    this.psm = true;
+  switchPsmMode() {
+    return this.psm = !this.psm;
   }
   resetTemp() {
     this.temp = this.DEFAULT_TEMPERATURE;
