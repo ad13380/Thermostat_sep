@@ -44,27 +44,52 @@ $(document).ready(function() {
     }
   });
 
+  $('#load_data').click(function() {
+    loadState();
+  });
+
   function updateTemp() {
     $('#display_temp').text(thermostat.viewTemp())
     $('#display_temp').attr('class', thermostat.energyUsage())
+    saveState();
   }
 
   function updatePsm() {
     thermostat.psm ? switchMode = 'Off' : switchMode = 'On'
     $('#set_psm').text("Switch Power Saving Mode " + switchMode)
+    saveState();
   }
 
   function updateWeather(city = DEFAULT_CITY, unit = DEFAULT_UNIT) {
     var url =  'http://api.openweathermap.org/data/2.5/weather?'
     var apiKey = 'addf8e57a2ad62fc2a197c044f32b301'
-    $.ajax({
-      type: 'GET',
-      url: url + "q=" + city + "&units=" + unit +"&appid=" + apiKey,
-      success: function(result) {
+    $.get(url + "q=" + city + "&units=" + unit +"&appid=" + apiKey,
+      function(result) {
         $('#api_city').text(city);
         $('#api_temp').text(result.main.temp);
       }
-    });
+    );
   }
- 
+
+  function saveState() {
+    $.post('/temperature', {
+      temperature: thermostat.temp,
+      psm: thermostat.psm
+    });
+    console.log('I saved state')
+  }
+
+  function loadState() {
+    $.get('temperature',
+      function(result) {
+        data = JSON.parse(result);
+        if (data.status === 200) {
+          thermostat.temp = data.temperature,
+          thermostat.psm = data.psm;
+        }       
+      }
+    );
+    updatePsm();
+    updateTemp();
+  }
 });
