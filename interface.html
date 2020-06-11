@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 
-<style>
-  span {
-    font-weight: bold;
-  }
-  
-    .low-usage {
+<style> 
+  .low-usage {
     color: green;
   }
   
@@ -16,13 +12,14 @@
   .high-usage {
     color: red;
   }
-  </style>
+</style>
   
 <html>
   <head>
     <meta charset="utf-8">
   </head>
   <body>
+
     <section>
       <h1>Thermostat</h1>
       <button id="reset_temp" type="submit">Reset Temperature</button><br><br>
@@ -31,13 +28,16 @@
       <button id="raise_temp" type="submit">+</button><br><br>
       <button id="set_psm" type="submit">Switch Power Saving Mode Off</button><br><br>
     </section>
+
     <section>
       <form id="enter_city">
         <input id="current_city" type="text" placeholder="Enter a city"></input>
         <input type="submit"></input>
       </form>
-      <h3>Current Temperature in London is <span id="api_temp"></span> C</h3>
+      <h3>Current Temperature in <span id="api_city">London</span> is <span id="api_temp"></span></h3>
+      <button id="switch_unit" type="submit">Switch to <span id="api_unit">°F</span></button>
     </section>
+
   </body>
   <script src="jquery.js"></script>
   <script src="src/interface.js"></script>
